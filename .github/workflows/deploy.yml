@@ -1,0 +1,43 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+# 이벤트 master에서 commit & push인 경우
+on:
+  push:
+    branches: [ "master" ]
+# CI/CD 작업
+jobs:
+  deploy:
+    runs-on: self-hosted
+  #모든 명령의 기본 작업 디렉토리
+    defaults:
+      run: 
+        working-directory: SpringLastProject
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4 
+          
+        - name: Maven Build 
+          run: mvn clean package -DskipTests
+
+        - name: Stop Tomcat
+          run: |
+            /home/sist/apache-tomcat-9.0.120/bin/shutdown.sh || true
+            sleep 3
+        - name: Remove Old war
+          run: |
+            rm -rf /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject.war
+            rm -rf /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject
+        - name: Deploy War
+          run: |
+            cp target/*.war /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject.war
+        - name: Tomcat start
+          run: |
+            nohup /home/sist/apache-tomcat-9.0.120/bin/startup.sh
+            sleep 5
