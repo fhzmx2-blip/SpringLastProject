@@ -12,7 +12,7 @@
       <a class="navbar-brand" href="#">Spring기타과정</a>
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="../maind/main.do">Home</a></li>
       <li><a href="../goods/main.do">스토어</a></li>
       <li><a href="#" style="color:blue">답변형게시판</a></li>
     </ul>
