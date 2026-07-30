@@ -34,6 +34,7 @@ jobs:
           run: |
             rm -rf /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject.war
             rm -rf /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject
+            rm -rf /home/sist/apache-tomcat-9.0.120/work/Catalina/localhost/SpringLastProject
         - name: Deploy War
           run: |
             cp target/*.war /home/sist/apache-tomcat-9.0.120/webapps/SpringLastProject.war
